@@ -16,9 +16,12 @@
   --color-text: #e2e8f0;
   --color-muted: #94a3b8;
   --color-link: #cbd5e1;
+  --color-accent: #e88f1a;
+  --color-accent-light: #F4D35E;
+  --color-hover-bg: #1a1de8;
 
   --radius: 12px;
-  --transition: 0.3s ease;
+  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ===== GLOBAL ===== */
@@ -49,8 +52,9 @@ body {
 /* ===== LAYOUT ===== */
 .wrapper {
   flex: 1;
-  width: 100%;
-  margin: auto;
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 /* ===== BANNER ===== */
@@ -91,7 +95,7 @@ body {
 
 .navigation a:hover {
   color: #fff;
-  background: #1a1de8;
+  background: var(--color-hover-bg);
 }
 
 /* underline animation */
@@ -113,8 +117,8 @@ body {
   width: 50%;
 }
 
-.navigation a:focus,
-button:focus {
+a:focus-visible,
+button:focus-visible {
   outline: 2px solid var(--color-primary-light);
   outline-offset: 3px;
 }
@@ -153,7 +157,8 @@ button:focus {
   border-radius: var(--radius);
   backdrop-filter: blur(12px);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
-  transition: background 0.3s ease;
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* Optional hover effect on content container for subtle interactivity */
@@ -161,11 +166,12 @@ button:focus {
   background: rgba(15, 23, 42, 0.85);
 }
 h2 {
-  color: #e88f1a; /* same lighter blue as links for consistency */
+  color: var(--color-accent);
   font-weight: 600;
   position: relative;
-  display: inline-block; /* allows underline effect to hug text */
-  transition: color 0.3s ease;
+  display: inline-block;
+  transition: (--transition);
+  margin-bottom: 0.75rem;
 }
 
 /* ===== PROJECTS ===== */
@@ -181,7 +187,7 @@ h2 {
   border-radius: var(--radius);
   padding: 1rem;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: (--transition);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -189,10 +195,12 @@ h2 {
 }
 
 .project:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 25px #e88f1a;
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 25px var(--color-accent);
 }
-
+.project:hover img {
+  transform: scale(1.03);
+}
 .image-container {
   position: relative;
 }
@@ -204,6 +212,7 @@ h2 {
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
   margin-bottom: 1rem;
+  transition: transform var(--transition);
 }
 
 .project-link {
@@ -218,6 +227,12 @@ h2 {
   color: #fff;
   text-decoration: none;
   background: rgba(0, 0, 0, 0.6);
+
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.image-container:hover .project-link {
+  opacity: 1;
 }
 .project a {
   font-weight: 600;
@@ -225,7 +240,7 @@ h2 {
   font-size: 1.1rem;
   text-decoration: none;
   position: relative;
-  transition: color 0.3s ease;
+  transition: (--transition);
 }
 
 .project a::after {
@@ -235,12 +250,12 @@ h2 {
   left: 0;
   width: 0;
   height: 2px;
-  background: #F4D35E;
-  transition: width 0.3s ease;
+  background: var(--color-accent-light);
+  transition: (--transition);
 }
 
 .project a:hover {
-  color: #F4D35E;
+  color: var(--color-accent-light);
 }
 
 .project a:hover::after {
@@ -261,7 +276,7 @@ button {
 
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 15px #e88f1a;
+  box-shadow: 0 0 15px var(--color-accent);
 }
 
 /* ===== FOOTER ===== */
@@ -306,17 +321,11 @@ button:hover {
     transition: none !important;
   }
 }
-h2 {
-  margin-bottom: 0.75rem;
-}
 @media (max-width: 600px) {
   .navigation ul {
     flex-direction: column;
     align-items: center;
   }
-}
-.project:hover {
-  transform: translateY(-6px) scale(1.02);
 }
 .project {
   border: 1px solid transparent;
@@ -336,4 +345,8 @@ h2 {
     linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
           mask-composite: exclude;
+}
+.navigation a {
+  width: 100%;
+  text-align: center;
 }
