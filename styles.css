@@ -300,3 +300,40 @@ button:hover {
   background: var(--color-primary);
   color: #fff;
 }
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+h2 {
+  margin-bottom: 0.75rem;
+}
+@media (max-width: 600px) {
+  .navigation ul {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+.project:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+.project {
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.project::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  padding: 1px;
+  background: linear-gradient(135deg, var(--color-primary), transparent);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+}
